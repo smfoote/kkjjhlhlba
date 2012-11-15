@@ -1,4 +1,4 @@
-function kkjjlhlhba(config) {
+function Kkjjlhlhba() {
   var keyCodes = {
     '8': 'delete',
     '9': 'tab',
@@ -76,30 +76,29 @@ function kkjjlhlhba(config) {
     '93': 'rcommand'
   };
 
+  var shortcuts;
   var currentCode = '';
 
   // Used to clear out currentCode after an extended period of idle time.
   var inputTimer;
 
-  if (document.addEventListener) {
-    document.addEventListener('keydown', handleKeyDown, false);
-  } else if (document.attachEvent) {
-    document.attachEvent('onkeydown', handleKeyDown);
-  }
-
   function handleKeyDown (e) {
-    var key, val, method;
+    var key, val, shortcut, method;
     e = (window.event) ? window.event : e;
     key = e.which ? e.which : e.keyCode;
     val = keyCodes[key] || '';
     currentCode = (currentCode === '') ? val : currentCode + ',' + val;
     window.clearTimeout(inputTimer);
-    if (config[currentCode] && config[currentCode].method) {
-      method = config[currentCode].method;
+    shortcut = shortcuts[currentCode];
+    if (shortcut && shortcut.method) {
+      method = shortcut.method;
       if (typeof method === 'string') {
         window.location = method;
       } else {
-        config[currentCode].method.call();
+        if (shortcut.preventDefault) {
+          e.preventDefault();
+        }
+        method.call(this, [e]);
         currentCode = '';
       }
     } else {
@@ -108,17 +107,26 @@ function kkjjlhlhba(config) {
       }, 1500);
     }
   }
+
+  return {
+    init: function(config) {
+      var method;
+      if (!shortcuts) {
+        shortcuts = config;
+        if (document.addEventListener) {
+          document.addEventListener('keydown', handleKeyDown, false);
+        } else if (document.attachEvent) {
+          document.attachEvent('onkeydown', handleKeyDown);
+        }
+      } else {
+        for (method in config) {
+          if (config.hasOwnProperty(method)) {
+            shortcuts[method] = config[method];
+          }
+        }
+      }
+    }
+  };
 }
 
-kkjjlhlhba({
-  'g,i': {
-    'description': 'Go to inbox',
-    'method': function () {
-      console.log('GOING TO INBOX');
-    }
-  },
-  'l,i': {
-    'description': 'Go to LinkedIn',
-    'method': 'http://linkedin.com'
-  }
-});
+var kkjjlhlhba = new Kkjjlhlhba();
