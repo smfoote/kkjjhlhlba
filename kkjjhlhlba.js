@@ -78,6 +78,8 @@ function Kkjjlhlhba() {
 
   var shortcuts;
   var currentCode = '';
+  var pressedKeys = [];
+  var previousVal = '';
 
   // Used to clear out currentCode after an extended period of idle time.
   var inputTimer;
@@ -89,7 +91,7 @@ function Kkjjlhlhba() {
       };
     } else if (document.attachEvent) {
       addEventListener =  function(el, evt, callback) {
-        el.attachEvent(evt, callback);
+        el.attachEvent('on' + evt, callback);
       };
     } else {
       addEventListener = function () {
@@ -104,7 +106,27 @@ function Kkjjlhlhba() {
     e = (window.event) ? window.event : e;
     key = e.which ? e.which : e.keyCode;
     val = keyCodes[key] || '';
-    currentCode = (currentCode === '') ? val : currentCode + ',' + val;
+    if (currentCode === '') {
+      currentCode = val;
+    } else if (pressedKeys.length) {
+      if (val !== previousVal) {
+        currentCode += '+' + val;
+      }
+    } else {
+      currentCode += ',' + val;
+    }
+    if ( val !== previousVal) {
+      pressedKeys.push(val);
+    }
+    previousVal = val;
+  }
+
+  function handleKeyUp (e) {
+    var key, val, shortcut, method;
+    e = (window.event) ? window.event : e;
+    key = e.which ? e.which : e.keyCode;
+    val = keyCodes[key] || '';
+    pressedKeys.splice(pressedKeys.indexOf(val), 1);
     window.clearTimeout(inputTimer);
     shortcut = shortcuts[currentCode];
     if (shortcut && shortcut.method) {
@@ -121,7 +143,7 @@ function Kkjjlhlhba() {
     } else {
       inputTimer = window.setTimeout(function() {
         currentCode = '';
-      }, 1500);
+      }, 1000);
     }
   }
 
@@ -168,11 +190,12 @@ function Kkjjlhlhba() {
       var cheatsheet;
       if (!shortcuts) {
         shortcuts = config.shortcuts;
-        shortcuts['shift,/'] = {
+        shortcuts['shift+/'] = {
           method: showCheatsheet,
           description: 'Show the keyboard shortcuts cheatsheet'
         };
         addEventListener(document, 'keydown', handleKeyDown, false);
+        addEventListener(document, 'keyup', handleKeyUp, false);
         cheatsheet = document.createElement('div');
         cheatsheet.id = 'keyboard-shortcuts';
         document.body.appendChild(cheatsheet);
@@ -183,9 +206,12 @@ function Kkjjlhlhba() {
           }
         }
       }
+
+      // Recreate cheatsheet each time init is run, so the final cheatsheet is accurate.
       createCheatSheet(shortcuts);
     }
   };
 }
 
+// Create single instance of Kkjjhlhlba.
 var kkjjlhlhba = new Kkjjlhlhba();
