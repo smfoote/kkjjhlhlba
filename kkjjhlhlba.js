@@ -82,6 +82,23 @@ function Kkjjlhlhba() {
   // Used to clear out currentCode after an extended period of idle time.
   var inputTimer;
 
+  var addEventListener = function (el, evt, callback) {
+    if (document.addEventListener) {
+      addEventListener = function(el, evt, callback) {
+        el.addEventListener(evt, callback, false);
+      };
+    } else if (document.attachEvent) {
+      addEventListener =  function(el, evt, callback) {
+        el.attachEvent(evt, callback);
+      };
+    } else {
+      addEventListener = function () {
+        return false;
+      };
+    }
+    addEventListener(el, evt, callback);
+  };
+
   function handleKeyDown (e) {
     var key, val, shortcut, method;
     e = (window.event) ? window.event : e;
@@ -122,16 +139,27 @@ function Kkjjlhlhba() {
 
   function createCheatSheet(shortcuts) {
     var container = document.getElementById('keyboard-shortcuts');
-    var cheatsheet = '<ul class="shortcuts">';
-    var shortcut;
+    var cheatsheet = '<h2>Keyboard Shortcuts</h2><ul class="shortcuts">';
+    var shortcut, closeButton;
     for (var method in shortcuts) {
       if (shortcuts.hasOwnProperty(method)) {
         shortcut = shortcuts[method];
-        cheatsheet += '<li class="shortcut">' + method + '<span class="description">' + shortcut.description + '<span></li>';
+        cheatsheet += '<li class="shortcut">' + method + ' <span class="description">' + shortcut.description + '<span></li>';
       }
     }
-    cheatsheet += '</ul></div>';
+    cheatsheet += '</ul><button type="button" id="close-cheatsheet">Close</button></div>';
     container.innerHTML = cheatsheet;
+    closeButton = document.getElementById('close-cheatsheet');
+    addEventListener(closeButton, 'click', function() {
+      container.className = container.className.replace(/\s*active/, '');
+    });
+  }
+
+  function showCheatsheet() {
+    var cheatsheet = document.getElementById('keyboard-shortcuts');
+    if (!cheatsheet.className.indexOf('active') > -1) {
+      cheatsheet.className += ' active';
+    }
   }
 
   return {
@@ -140,16 +168,15 @@ function Kkjjlhlhba() {
       var cheatsheet;
       if (!shortcuts) {
         shortcuts = config.shortcuts;
-        if (document.addEventListener) {
-          document.addEventListener('keydown', handleKeyDown, false);
-        } else if (document.attachEvent) {
-          document.attachEvent('onkeydown', handleKeyDown);
-        }
+        shortcuts['shift,/'] = {
+          method: showCheatsheet,
+          description: 'Show the keyboard shortcuts cheatsheet'
+        };
+        addEventListener(document, 'keydown', handleKeyDown, false);
         cheatsheet = document.createElement('div');
         cheatsheet.id = 'keyboard-shortcuts';
         document.body.appendChild(cheatsheet);
       } else {
-        // TODO config.shortcuts shouldn't be an array.
         for (method in config.shortcuts) {
           if (config.shortcuts.hasOwnProperty(method)) {
             shortcuts[method] = config.shortcuts[method];

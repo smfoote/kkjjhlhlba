@@ -1,0 +1,47 @@
+#keyboard-shortcuts {
+  width: 85%;
+  position: absolute;
+  bottom: 0;
+  left: 7%;
+  background-color: #CCC;
+  overflow: hidden
+  -webkit-border-top-left-radius: 8px;
+  -webkit-border-top-right-radius: 8px;
+  -moz-border-radius-topleft: 8px;
+  -moz-border-radius-topright: 8px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  font-family: Helvetica,Arail,sans-serif;
+  color: #383838;
+
+  /** Transition stuff **/
+  height: 0;
+  transition: height 1s;
+  -webkit-transition: height 1s;
+  -moz-transition: height 1s;
+  -o-transition: height 1s;
+}
+
+#keyboard-shortcuts.active {
+  height: 130px;
+}
+
+#keyboard-shortcuts h2 {
+  text-align: center;
+  width: 95%;
+  margin: 15px auto;
+  border-bottom: 1px solid #A3A3A3;
+}
+
+#keyboard-shortcuts #close-cheatsheet {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+#keyboard-shortcuts #close-cheatsheet:hover {
+  text-decoration: underline;
+}
