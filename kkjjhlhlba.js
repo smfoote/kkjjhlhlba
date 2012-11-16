@@ -106,7 +106,6 @@ function Kkjjlhlhba() {
     e = (window.event) ? window.event : e;
     key = e.which ? e.which : e.keyCode;
     val = keyCodes[key] || '';
-    console.log(pressedKeys);
     if (currentCode === '') {
       currentCode = val;
     } else if (pressedKeys.length) {
@@ -116,7 +115,6 @@ function Kkjjlhlhba() {
     } else {
       currentCode += ',' + val;
     }
-    console.log(currentCode);
     if ( val !== previousVal) {
       pressedKeys.push(val);
     }
@@ -180,7 +178,6 @@ function Kkjjlhlhba() {
   }
 
   function showCheatsheet() {
-    console.log('showing cheat sheet');
     var cheatsheet = document.getElementById('keyboard-shortcuts');
     if (!cheatsheet.className.indexOf('active') > -1) {
       cheatsheet.className += ' active';
