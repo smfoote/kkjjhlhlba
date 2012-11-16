@@ -96,7 +96,7 @@ function Kkjjlhlhba() {
         window.location = method;
       } else {
         if (shortcut.preventDefault) {
-          e.preventDefault();
+          preventDefault();
         }
         method.call(this, [e]);
         currentCode = '';
@@ -108,23 +108,55 @@ function Kkjjlhlhba() {
     }
   }
 
+  function preventDefault(e) {
+    if (e.preventDefault) {
+     return (function(e) {
+         e.preventDefault();
+       });
+     } else {
+      return (function(e) {
+        e.returnValue = false;
+      });
+    }
+  }
+
+  function createCheatSheet(shortcuts) {
+    var container = document.getElementById('keyboard-shortcuts');
+    var cheatsheet = '<ul class="shortcuts">';
+    var shortcut;
+    for (var method in shortcuts) {
+      if (shortcuts.hasOwnProperty(method)) {
+        shortcut = shortcuts[method];
+        cheatsheet += '<li class="shortcut">' + method + '<span class="description">' + shortcut.description + '<span></li>';
+      }
+    }
+    cheatsheet += '</ul></div>';
+    container.innerHTML = cheatsheet;
+  }
+
   return {
     init: function(config) {
       var method;
+      var cheatsheet;
       if (!shortcuts) {
-        shortcuts = config;
+        shortcuts = config.shortcuts;
         if (document.addEventListener) {
           document.addEventListener('keydown', handleKeyDown, false);
         } else if (document.attachEvent) {
           document.attachEvent('onkeydown', handleKeyDown);
         }
+        cheatsheet = document.createElement('div');
+        cheatsheet.id = 'keyboard-shortcuts';
+        document.body.appendChild(cheatsheet);
       } else {
-        for (method in config) {
-          if (config.hasOwnProperty(method)) {
-            shortcuts[method] = config[method];
+        // TODO config.shortcuts shouldn't be an array.
+        for (method in config.shortcuts) {
+          if (config.shortcuts.hasOwnProperty(method)) {
+            shortcuts[method] = config.shortcuts[method];
           }
         }
       }
+      createCheatSheet(shortcuts);
     }
   };
 }

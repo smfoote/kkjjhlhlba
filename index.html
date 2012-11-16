@@ -2,43 +2,29 @@
 <html>
 <head>
   <title>Vim rocks!</title>
-  <script type="text/javascript" src="kkjjlhlhba.js"></script>
-  <script>
-    kkjjlhlhba.init({
-      'g,i': {
-        'description': 'Go to Gmail',
-        'method': function () {
-          console.log('GOING TO GMAIL');
-        }
-      },
-      'l,i': {
-        'description': 'Go to LinkedIn',
-        'method': 'http://linkedin.com'
-      },
-      'f,b': {
-        'description': 'Go to Facebook',
-        'method': 'http://facebook.com'
-      }
-    });
-  </script>
+  <script type="text/javascript" src="kkjjhlhlba.js"></script>
 </head>
 <body>
   <marquee>Testing...</marquee>
+</body>
   <script>
     kkjjlhlhba.init({
-      'g,i': {
-        'description': 'Go to inbox',
-        'method': function () {
-          console.log('GOING TO INBOX');
-        }
-      },
-      'l,i': {
-        'description': 'Go to LinkedIn',
-        'method': function() {
-          console.log('going to linkedin');
+      'shortcuts': {
+        'g,i': {
+          'description': 'Go to Gmail',
+          'method': function () {
+            console.log('GOING TO GMAIL');
+          }
+        },
+        'l,i': {
+          'description': 'Go to LinkedIn',
+          'method': 'http://linkedin.com'
+        },
+        'f,b': {
+          'description': 'Go to Facebook',
+          'method': 'http://facebook.com'
         }
       }
     });
   </script>
-</body>
 </html>
