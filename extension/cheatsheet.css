@@ -1,6 +1,6 @@
 #keyboard-shortcuts {
   width: 85%;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 7%;
   background-color: #CCC;
@@ -13,7 +13,7 @@
   border-top-right-radius: 8px;
   font-family: Helvetica,Arail,sans-serif;
   color: #383838;
-  z-index: 1000;
+  z-index: 2000;
 
   /** Transition stuff **/
   height: 0;

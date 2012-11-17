@@ -127,8 +127,11 @@ function Kkjjhlhlba() {
     e = (window.event) ? window.event : e;
     key = e.which ? e.which : e.keyCode;
     val = keyCodes[key] || '';
+    console.log('key up val: ', val);
     pressedKeys.splice(pressedKeys.indexOf(val), 1);
+    console.log('pressed keys: ', pressedKeys);
     window.clearTimeout(inputTimer);
+    console.log('current code: ', currentCode);
     shortcut = shortcuts[currentCode];
     if (shortcut && shortcut.method) {
       method = shortcut.method;
@@ -219,15 +222,15 @@ var kkjjhlhlba = new Kkjjhlhlba();
 
 kkjjhlhlba.start({
         'shortcuts': {
-          'g,i': {
+          'ctrl+k,g,i': {
             'description': 'Go to Gmail',
             'method': 'http://mail.google.com'
           },
-          'l,i': {
+          'ctrl+k,l,i': {
             'description': 'Go to LinkedIn',
             'method': 'http://linkedin.com'
           },
-          'f,b': {
+          'ctrl+k,f,b': {
             'description': 'Go to Facebook',
             'method': 'http://facebook.com'
           }
