@@ -1,3 +1,4 @@
+console.log('loading kkjjhlhlba');
 function Kkjjhlhlba() {
   var keyCodes = {
     '8': 'delete',
@@ -185,7 +186,7 @@ function Kkjjhlhlba() {
   }
 
   return {
-    init: function(config) {
+    start: function(config) {
       var method;
       var cheatsheet;
       if (!shortcuts) {
@@ -215,3 +216,20 @@ function Kkjjhlhlba() {
 
 // Create single instance of Kkjjhlhlba.
 var kkjjhlhlba = new Kkjjhlhlba();
+
+kkjjhlhlba.start({
+        'shortcuts': {
+          'g,i': {
+            'description': 'Go to Gmail',
+            'method': 'http://mail.google.com'
+          },
+          'l,i': {
+            'description': 'Go to LinkedIn',
+            'method': 'http://linkedin.com'
+          },
+          'f,b': {
+            'description': 'Go to Facebook',
+            'method': 'http://facebook.com'
+          }
+        }
+      });
