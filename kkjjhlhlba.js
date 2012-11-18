@@ -1,4 +1,4 @@
-function Kkjjlhlhba() {
+function Kkjjhlhlba() {
   var keyCodes = {
     '8': 'delete',
     '9': 'tab',
@@ -185,7 +185,7 @@ function Kkjjlhlhba() {
   }
 
   return {
-    init: function(config) {
+    start: function(config) {
       var method;
       var cheatsheet;
       if (!shortcuts) {
@@ -207,11 +207,11 @@ function Kkjjlhlhba() {
         }
       }
 
-      // Recreate cheatsheet each time init is run, so the final cheatsheet is accurate.
+      // Recreate cheatsheet each time start is run, so the final cheatsheet is accurate.
       createCheatSheet(shortcuts);
     }
   };
 }
 
 // Create single instance of Kkjjhlhlba.
-var kkjjlhlhba = new Kkjjlhlhba();
+var kkjjhlhlba = new Kkjjhlhlba();
