@@ -127,11 +127,8 @@ function Kkjjhlhlba() {
     e = (window.event) ? window.event : e;
     key = e.which ? e.which : e.keyCode;
     val = keyCodes[key] || '';
-    console.log('key up val: ', val);
     pressedKeys.splice(pressedKeys.indexOf(val), 1);
-    console.log('pressed keys: ', pressedKeys);
     window.clearTimeout(inputTimer);
-    console.log('current code: ', currentCode);
     shortcut = shortcuts[currentCode];
     if (shortcut && shortcut.method) {
       method = shortcut.method;
@@ -220,19 +217,67 @@ function Kkjjhlhlba() {
 // Create single instance of Kkjjhlhlba.
 var kkjjhlhlba = new Kkjjhlhlba();
 
-kkjjhlhlba.start({
-        'shortcuts': {
-          'ctrl+k,g,i': {
-            'description': 'Go to Gmail',
-            'method': 'http://mail.google.com'
-          },
-          'ctrl+k,l,i': {
-            'description': 'Go to LinkedIn',
-            'method': 'http://linkedin.com'
-          },
-          'ctrl+k,f,b': {
-            'description': 'Go to Facebook',
-            'method': 'http://facebook.com'
-          }
+(function() {
+  function getOffsetTop(el) {
+    var offsetTop = 0;
+    do {
+      offsetTop += el.offsetTop;
+    } while (el = el.offsetParent);
+    return offsetTop;
+  }
+
+  function setFocusOn(el) {
+    var offsetTop = getOffsetTop(el) - 50;
+    var scrollPos = document.body.scrollTop;
+    var anchor = el.getElementsByTagName('a')[0];
+    el.className += ' focus';
+    anchor.focus();
+    document.body.scrollTop = offsetTop;
+  }
+
+  function navigateHomepage(direction) {
+    var feed = document.getElementById('my-feed-post');
+    var focusedElement = feed.getElementsByClassName('focus');
+    if (!focusedElement.length) {
+      focusedElement = feed.getElementsByClassName('feed-item')[0];
+    } else {
+      focusedElement = focusedElement[0];
+      focusedElement.className = focusedElement.className.replace(/\s+focus\b/, '');
+      if (direction === 'next') {
+        focusedElement = focusedElement.nextElementSibling;
+      } else {
+        focusedElement = focusedElement.previousElementSibling;
+      }
+    }
+    setFocusOn(focusedElement);
+  }
+
+  kkjjhlhlba.start({
+    'shortcuts': {
+      'ctrl+k,g,i': {
+        'description': 'Go to Gmail',
+        'method': 'http://mail.google.com'
+      },
+      'ctrl+k,l,i': {
+        'description': 'Go to LinkedIn',
+        'method': 'http://linkedin.com'
+      },
+      'ctrl+k,f,b': {
+        'description': 'Go to Facebook',
+        'method': 'http://facebook.com'
+      },
+      'j': {
+        'description': 'Next item',
+        'method': function() {
+          navigateHomepage('next');
         }
-      });
+      },
+      'k': {
+        'description': 'Previous item',
+        'method': function() {
+          navigateHomepage('preivous');
+        }
+      },
+    }
+  });
+})();
