@@ -21,6 +21,7 @@ function Kkjjhlhlba() {
     '55': '7',
     '56': '8',
     '57': '9',
+	'63': '?',
     '65': 'a',
     '66': 'b',
     '67': 'c',
@@ -73,13 +74,23 @@ function Kkjjhlhlba() {
     '17': 'ctrl',
     '18': 'opt',
     '91': 'lcommand',
-    '93': 'rcommand'
+    '93': 'rcommand',
+
+	// uppercase for non letters
+	'1186': ':',
+    '1219': '{',
+    '1221': '}',
+    '1188': '<',
+    '1190': '>',
+    '1191': '?',
   };
 
   var shortcuts;
   var currentCode = '';
   var pressedKeys = [];
   var previousVal = '';
+  var isShiftDown = false;
+  var capitalKeyOffset = 1000;
 
   // Used to clear out currentCode after an extended period of idle time.
   var inputTimer;
@@ -103,29 +114,45 @@ function Kkjjhlhlba() {
 
   function handleKeyDown (e) {
     var key, val, shortcut, method;
+	var keydisplay = document.getElementById("key-display");
     e = (window.event) ? window.event : e;
     key = e.which ? e.which : e.keyCode;
+	console.log(key);
     val = keyCodes[key] || '';
-    if (currentCode === '') {
-      currentCode = val;
-    } else if (pressedKeys.length) {
-      if (val !== previousVal) {
-        currentCode += '+' + val;
-      }
-    } else {
-      currentCode += ',' + val;
-    }
-    if ( val !== previousVal) {
-      pressedKeys.push(val);
-    }
-    previousVal = val;
+	if(keyCodes[key] === "shift") {
+		isShiftDown = true;
+	}
+	else {
+		if(isShiftDown) {
+			val = keyCodes[key+capitalKeyOffset] || val.toUpperCase();
+		}
+    	if (currentCode === '') {
+	      currentCode = val;
+	    } else if (pressedKeys.length) {
+	      if (val !== previousVal) {
+	        currentCode += '+' + val;
+	      }
+	    } else {
+	      currentCode += ',' + val;
+	    }
+	    if ( val !== previousVal) {
+	      pressedKeys.push(val);
+	    }
+	    previousVal = val;
+		keydisplay.className = document.getElementById("key-display").className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
+	    keydisplay.innerHTML = currentCode;
+	}
   }
 
   function handleKeyUp (e) {
     var key, val, shortcut, method;
+	var keydisplay = document.getElementById("key-display");
     e = (window.event) ? window.event : e;
     key = e.which ? e.which : e.keyCode;
     val = keyCodes[key] || '';
+	if(keyCodes[key] == "shift") {
+		isShiftDown = false;
+	}
     pressedKeys.splice(pressedKeys.indexOf(val), 1);
     window.clearTimeout(inputTimer);
     shortcut = shortcuts[currentCode];
@@ -143,6 +170,10 @@ function Kkjjhlhlba() {
     } else {
       inputTimer = window.setTimeout(function() {
         currentCode = '';
+		if(keydisplay.className.search('hidden') < 0) {
+			keydisplay.className += ("hidden");
+		}
+		
       }, 1000);
     }
   }
@@ -188,9 +219,10 @@ function Kkjjhlhlba() {
     start: function(config) {
       var method;
       var cheatsheet;
+	  var keydisplay;
       if (!shortcuts) {
         shortcuts = config.shortcuts;
-        shortcuts['shift+/'] = {
+        shortcuts['?'] = {
           method: showCheatsheet,
           description: 'Show the keyboard shortcuts cheatsheet'
         };
@@ -199,6 +231,10 @@ function Kkjjhlhlba() {
         cheatsheet = document.createElement('div');
         cheatsheet.id = 'keyboard-shortcuts';
         document.body.appendChild(cheatsheet);
+		keydisplay = document.createElement('div');
+	 	keydisplay.id = 'key-display';
+		keydisplay.className += 'hidden';
+		document.body.appendChild(keydisplay);
       } else {
         for (method in config.shortcuts) {
           if (config.shortcuts.hasOwnProperty(method)) {
