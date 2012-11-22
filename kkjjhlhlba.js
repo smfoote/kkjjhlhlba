@@ -185,7 +185,7 @@ function Kkjjhlhlba() {
   }
 
   return {
-    init: function(config) {
+    start: function(config) {
       var method;
       var cheatsheet;
       if (!shortcuts) {
@@ -207,7 +207,7 @@ function Kkjjhlhlba() {
         }
       }
 
-      // Recreate cheatsheet each time init is run, so the final cheatsheet is accurate.
+      // Recreate cheatsheet each time start is run, so the final cheatsheet is accurate.
       createCheatSheet(shortcuts);
     }
   };
