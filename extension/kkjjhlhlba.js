@@ -402,7 +402,11 @@ var kkjjhlhlba = new Kkjjhlhlba();
 
   kkjjhlhlba.start({
     'shortcuts': {
-      'ctrl+k,g,i': {
+      'ctrl+k,g,m': {
+        'description': 'Go to Gmail',
+        'method': 'http://mail.google.com'
+      },
+      'ctrl+k,g,o,o,g': {
         'description': 'Go to Gmail',
         'method': 'http://mail.google.com'
       },
@@ -414,18 +418,28 @@ var kkjjhlhlba = new Kkjjhlhlba();
         'description': 'Go to Facebook',
         'method': 'http://facebook.com'
       },
-      'j': {
-        'description': 'Next item',
-        'method': function() {
-          navigateHomepage('next');
-        }
-      },
-      'k': {
-        'description': 'Previous item',
-        'method': function() {
-          navigateHomepage('preivous');
-        }
+      'ctrl+k,t,w': {
+        'description': 'Go to Twitter',
+        'method': 'http://twitter.com'
       },
     }
   });
+  if (document.domain === 'linkedin.com') {
+    kkjjhlhlba.start({
+      'shortcuts': {
+        'j': {
+          'description': 'Next item',
+          'method': function() {
+            navigateHomepage('next');
+          }
+        },
+        'k': {
+          'description': 'Previous item',
+          'method': function() {
+            navigateHomepage('preivous');
+          }
+        }
+      }
+    });
+  }
 })();
