@@ -268,6 +268,13 @@ function Kkjjhlhlba() {
 
         // Reset the currentCode
         currentCode = '';
+
+        // And hide the keydisplay [remove after Nov. 29, 2012]
+        window.setTimeout(function() {
+          if (keydisplay.className.search('hidden') < 0) {
+            keydisplay.className += ("hidden");
+          }
+        }, 750);
       }
     } else {
       // If no shortcut is found, start a new timer.
