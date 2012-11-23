@@ -1,4 +1,6 @@
 /* Homepage */
-#my-feed-post .feed-item.focus {
+#my-feed-post .feed-item.kkjj-focus,
+#results .result.kkjj-focus {
   border-left: 2px solid #53A0D0 !important;
 }
+

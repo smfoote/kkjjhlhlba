@@ -385,22 +385,23 @@ var kkjjhlhlba = new Kkjjhlhlba();
     var offsetTop = getOffsetTop(el) - 50;
     var scrollPos = document.body.scrollTop;
     var anchor = el.getElementsByTagName('a')[0];
-    el.className += ' focus';
+    el.className += ' kkjj-focus';
     anchor.focus();
     document.body.scrollTop = offsetTop;
   }
 
-  function navigateHomepage(direction) {
-    var feed = document.getElementById('my-feed-post');
-    var focusedElement = feed.getElementsByClassName('focus');
+  function navigateList(direction, containerID, listClassName) {
+    var list = document.getElementById(containerID);
+    console.log(list);
+    var focusedElement = list.getElementsByClassName('kkjj-focus');
     if (!focusedElement.length) {
-      focusedElement = feed.getElementsByClassName('feed-item')[0];
+      focusedElement = list.getElementsByClassName(listClassName)[0];
     } else {
       focusedElement = focusedElement[0];
-      focusedElement.className = focusedElement.className.replace(/\s+focus\b/, '');
-      if (direction === 'next') {
+      focusedElement.className = focusedElement.className.replace(/\s+kkjj-focus\b/, '');
+      if (direction === 'next' && focusedElement.nextElementSibling) {
         focusedElement = focusedElement.nextElementSibling;
-      } else {
+      } else if (focusedElement.previousElementSibling) {
         focusedElement = focusedElement.previousElementSibling;
       }
     }
@@ -431,19 +432,42 @@ var kkjjhlhlba = new Kkjjhlhlba();
       },
     }
   });
-  if (document.domain === 'linkedin.com') {
+
+  if (document.domain.indexOf('linkedin.com') > -1) {
     kkjjhlhlba.start({
       'shortcuts': {
         'j': {
           'description': 'Next item',
           'method': function() {
-            navigateHomepage('next');
+            console.log('hey there');
+            switch (document.body.id) {
+              case 'pagekey-member-home':
+                navigateList('next', 'my-feed-post', 'feed-item');
+                break;
+              case 'pagekey-voltron_federated_search_internal':
+                navigateList('next', 'results', 'result');
+                break;
+            }
           }
         },
         'k': {
           'description': 'Previous item',
           'method': function() {
-            navigateHomepage('preivous');
+            console.log(document.body.id);
+            switch (document.body.id) {
+              case 'pagekey-member-home':
+                navigateList('previous', 'my-feed-post', 'feed-item');
+                break;
+              case 'pagekey-voltron_federated_search_internal':
+                navigateList('previous', 'results', 'result');
+                break;
+            }
+          }
+        },
+        '/': {
+          'description': 'Search LinkedIn',
+          'method': function() {
+            document.getElementById('main-search-box').focus();
           }
         }
       }
