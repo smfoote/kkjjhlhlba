@@ -1,3 +1,4 @@
+console.log('loading kkjjhlhlba');
 function Kkjjhlhlba() {
   var keyCodes = {
     '8': 'delete',
@@ -363,3 +364,82 @@ function Kkjjhlhlba() {
 
 // Create single instance of Kkjjhlhlba.
 var kkjjhlhlba = new Kkjjhlhlba();
+
+(function() {
+  function getOffsetTop(el) {
+    var offsetTop = 0;
+    do {
+      offsetTop += el.offsetTop;
+    } while (el = el.offsetParent);
+    return offsetTop;
+  }
+
+  function setFocusOn(el) {
+    var offsetTop = getOffsetTop(el) - 50;
+    var scrollPos = document.body.scrollTop;
+    var anchor = el.getElementsByTagName('a')[0];
+    el.className += ' focus';
+    anchor.focus();
+    document.body.scrollTop = offsetTop;
+  }
+
+  function navigateHomepage(direction) {
+    var feed = document.getElementById('my-feed-post');
+    var focusedElement = feed.getElementsByClassName('focus');
+    if (!focusedElement.length) {
+      focusedElement = feed.getElementsByClassName('feed-item')[0];
+    } else {
+      focusedElement = focusedElement[0];
+      focusedElement.className = focusedElement.className.replace(/\s+focus\b/, '');
+      if (direction === 'next') {
+        focusedElement = focusedElement.nextElementSibling;
+      } else {
+        focusedElement = focusedElement.previousElementSibling;
+      }
+    }
+    setFocusOn(focusedElement);
+  }
+
+  kkjjhlhlba.start({
+    'shortcuts': {
+      'ctrl+k,g,m': {
+        'description': 'Go to Gmail',
+        'method': 'http://mail.google.com'
+      },
+      'ctrl+k,g,o,o,g': {
+        'description': 'Go to Gmail',
+        'method': 'http://mail.google.com'
+      },
+      'ctrl+k,l,i': {
+        'description': 'Go to LinkedIn',
+        'method': 'http://linkedin.com'
+      },
+      'ctrl+k,f,b': {
+        'description': 'Go to Facebook',
+        'method': 'http://facebook.com'
+      },
+      'ctrl+k,t,w': {
+        'description': 'Go to Twitter',
+        'method': 'http://twitter.com'
+      },
+    }
+  });
+  if (document.domain === 'linkedin.com') {
+    kkjjhlhlba.start({
+      'shortcuts': {
+        'j': {
+          'description': 'Next item',
+          'method': function() {
+            navigateHomepage('next');
+          }
+        },
+        'k': {
+          'description': 'Previous item',
+          'method': function() {
+            navigateHomepage('preivous');
+          }
+        }
+      }
+    });
+  }
+})();

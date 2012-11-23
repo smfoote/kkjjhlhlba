@@ -1,0 +1,4 @@
+/* Homepage */
+#my-feed-post .feed-item.focus {
+  border-left: 2px solid #53A0D0 !important;
+}
