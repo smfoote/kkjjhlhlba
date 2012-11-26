@@ -7,7 +7,7 @@
   },
   "content_scripts": [{
     "matches": ["*://*/*"],
-    "css": ["cheatsheet.css", "li.css", "keyDisplay.css"],
+    "css": ["cheatsheet.css", "cheatsheet_linkedin.css", "li.css", "keyDisplay.css"],
     "js": ["kkjjhlhlba.js"]
   }]
 }

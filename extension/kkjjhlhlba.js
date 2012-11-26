@@ -131,7 +131,7 @@ function Kkjjhlhlba() {
   var isShiftDown = false;
 
   // Used with isShiftDown to convert non-letter keys to uppercase
-  var capitalKeyOffset = 1000;
+  var shiftKeyOffset = 1000;
 
   // Used to clear out currentCode after an extended period of idle time.
   var inputTimer;
@@ -192,7 +192,7 @@ function Kkjjhlhlba() {
     } else {
       if(isShiftDown) {
         // If shift is pressed, convert the pressed key to uppercase, or the shifted val
-        val = keyCodes[key+capitalKeyOffset] || val.toUpperCase();
+        val = keyCodes[key+shiftKeyOffset] || val.toUpperCase();
       }
 
       // Build the string of key sequences
@@ -219,7 +219,7 @@ function Kkjjhlhlba() {
 
       // Display the current code in the page [for presentation purposes only - remove on 
       // Nov. 29, 2012]
-      keydisplay.className = document.getElementById("key-display").className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
+      keydisplay.className = "";
       keydisplay.innerHTML = currentCode;
     }
   }
@@ -296,11 +296,18 @@ function Kkjjhlhlba() {
     var container = document.getElementById('keyboard-shortcuts');
     var cheatsheet = '<h2>Keyboard Shortcuts</h2><ul class="shortcuts">';
     var shortcut, closeButton;
+    var maxElements = 7;
+    var currentElements = 0;
     for (var method in shortcuts) {
       if (shortcuts.hasOwnProperty(method)) {
         shortcut = shortcuts[method];
+        if(currentElements >= maxElements) {
+          currentElements = 0;
+          cheatsheet += '</ul><ul class="shortcuts">';
+        }
         cheatsheet += '<li class="shortcut">' + method + ' <span class="description">' + shortcut.description + '<span></li>';
       }
+      currentElements ++;
     }
     cheatsheet += '</ul><button type="button" id="close-cheatsheet">Close</button></div>';
     // Put created HTML into the container
@@ -316,7 +323,7 @@ function Kkjjhlhlba() {
   // Show the cheatsheet by adding the class "active"
   function showCheatsheet() {
     var cheatsheet = document.getElementById('keyboard-shortcuts');
-    if (!cheatsheet.className.indexOf('active') > -1) {
+    if (!(cheatsheet.className.indexOf('active') > -1)) {
       cheatsheet.className += ' active';
     }
   }
