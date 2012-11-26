@@ -301,9 +301,9 @@ function Kkjjhlhlba() {
     for (var method in shortcuts) {
       if (shortcuts.hasOwnProperty(method)) {
         shortcut = shortcuts[method];
- 	if(currentElements >= maxElements) {
+        if(currentElements >= maxElements) {
           currentElements = 0;
-	  cheatsheet += '</ul><ul class="shortcuts">';
+          cheatsheet += '</ul><ul class="shortcuts">';
         }
         cheatsheet += '<li class="shortcut">' + method + ' <span class="description">' + shortcut.description + '<span></li>';
       }
