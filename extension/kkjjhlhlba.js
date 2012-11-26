@@ -131,7 +131,7 @@ function Kkjjhlhlba() {
   var isShiftDown = false;
 
   // Used with isShiftDown to convert non-letter keys to uppercase
-  var capitalKeyOffset = 1000;
+  var shiftKeyOffset = 1000;
 
   // Used to clear out currentCode after an extended period of idle time.
   var inputTimer;
@@ -192,7 +192,7 @@ function Kkjjhlhlba() {
     } else {
       if(isShiftDown) {
         // If shift is pressed, convert the pressed key to uppercase, or the shifted val
-        val = keyCodes[key+capitalKeyOffset] || val.toUpperCase();
+        val = keyCodes[key+shiftKeyOffset] || val.toUpperCase();
       }
 
       // Build the string of key sequences
@@ -219,7 +219,7 @@ function Kkjjhlhlba() {
 
       // Display the current code in the page [for presentation purposes only - remove on 
       // Nov. 29, 2012]
-      keydisplay.className = document.getElementById("key-display").className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
+      keydisplay.className = "";
       keydisplay.innerHTML = currentCode;
     }
   }
