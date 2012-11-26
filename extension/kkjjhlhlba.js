@@ -301,13 +301,13 @@ function Kkjjhlhlba() {
     for (var method in shortcuts) {
       if (shortcuts.hasOwnProperty(method)) {
         shortcut = shortcuts[method];
- 		if(currentElements >= maxElements) {
-		  currentElements = 0;
-		  cheatsheet += '</ul><ul class="shortcuts">'
-		}
+ 	if(currentElements >= maxElements) {
+          currentElements = 0;
+	  cheatsheet += '</ul><ul class="shortcuts">'
+        }
         cheatsheet += '<li class="shortcut">' + method + ' <span class="description">' + shortcut.description + '<span></li>';
       }
-	  currentElements ++;
+      currentElements ++;
     }
     cheatsheet += '</ul><button type="button" id="close-cheatsheet">Close</button></div>';
     // Put created HTML into the container
