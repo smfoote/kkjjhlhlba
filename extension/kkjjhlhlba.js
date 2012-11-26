@@ -296,11 +296,18 @@ function Kkjjhlhlba() {
     var container = document.getElementById('keyboard-shortcuts');
     var cheatsheet = '<h2>Keyboard Shortcuts</h2><ul class="shortcuts">';
     var shortcut, closeButton;
+    var maxElements = 7;
+    var currentElements = 0;
     for (var method in shortcuts) {
       if (shortcuts.hasOwnProperty(method)) {
         shortcut = shortcuts[method];
+ 		if(currentElements >= maxElements) {
+		  currentElements = 0;
+		  cheatsheet += '</ul><ul class="shortcuts">'
+		}
         cheatsheet += '<li class="shortcut">' + method + ' <span class="description">' + shortcut.description + '<span></li>';
       }
+	  currentElements ++;
     }
     cheatsheet += '</ul><button type="button" id="close-cheatsheet">Close</button></div>';
     // Put created HTML into the container
@@ -316,7 +323,7 @@ function Kkjjhlhlba() {
   // Show the cheatsheet by adding the class "active"
   function showCheatsheet() {
     var cheatsheet = document.getElementById('keyboard-shortcuts');
-    if (!cheatsheet.className.indexOf('active') > -1) {
+    if (!(cheatsheet.className.indexOf('active') > -1)) {
       cheatsheet.className += ' active';
     }
   }
