@@ -1,4 +1,5 @@
 #key-display {
+  z-index: 10002;
   height: 100px;
   position: fixed;
   top: 40px;
