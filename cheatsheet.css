@@ -29,16 +29,32 @@
 }
 
 #keyboard-shortcuts h2 {
+  font-size: 16px;
+  font-weight: bold;
+  color: #0073B2;
   text-align: center;
   width: 95%;
-  margin: 15px auto;
+  margin: 10px auto;
+  padding-bottom: 10px;
   border-bottom: 1px solid #A3A3A3;
 }
 
+#keyboard-shortcuts ul {
+  float: left;
+  list-style: none;
+}
+
+#keyboard-shortcuts li {
+  margin: 4px 0 4px 30px;
+  font-size: 12px;
+  color: #333;
+}
+
 #keyboard-shortcuts #close-cheatsheet {
+  font-weight: bold;
   position: absolute;
   top: 8px;
-  right: 8px;
+  right: 28px;
   border: none;
   background: none;
   cursor: pointer;

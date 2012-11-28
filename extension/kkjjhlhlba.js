@@ -301,7 +301,7 @@ function Kkjjhlhlba() {
     for (var method in shortcuts) {
       if (shortcuts.hasOwnProperty(method)) {
         shortcut = shortcuts[method];
-        cheatsheet += '<li class="shortcut">' + method + ' <span class="description">' + shortcut.description + '<span></li>';
+        cheatsheet += '<li class="shortcut"><span class="method">' + method.split(',').join(', then ') + ':</span><span class="description">' + shortcut.description + '<span></li>';
       }
     }
     cheatsheet += '</ul><button type="button" id="close-cheatsheet">Close</button></div>';
@@ -311,7 +311,7 @@ function Kkjjhlhlba() {
     // Add event listener on the close button.
     closeButton = document.getElementById('close-cheatsheet');
     addEventListener(closeButton, 'click', function() {
-      container.className = container.className.replace(/\s*active/, '');
+      hideCheatSheet(container);
     });
   }
 
@@ -321,6 +321,11 @@ function Kkjjhlhlba() {
     if (!cheatsheet.className.indexOf('active') > -1) {
       cheatsheet.className += ' active';
     }
+  }
+
+  // Hide the cheatsheet by removing the class "active"
+  function hideCheatSheet(el) {
+    el.className = el.className.replace(/\s*active/, '');
   }
 
   return {
@@ -410,15 +415,21 @@ var kkjjhlhlba = new Kkjjhlhlba();
     setFocusOn(focusedElement);
   }
 
+  // Hide the cheatsheet by removing the class "active"
+  function hideCheatSheet(el) {
+    el.className = el.className.replace(/\s*active/, '');
+  }
+
+
   kkjjhlhlba.start({
     'shortcuts': {
       'ctrl+k,g,m': {
         'description': 'Go to Gmail',
         'method': 'http://mail.google.com'
       },
-      'ctrl+k,g,o,o,g': {
-        'description': 'Go to Gmail',
-        'method': 'http://mail.google.com'
+      'ctrl+k,g,l': {
+        'description': 'Go to Google',
+        'method': 'http://www.google.com'
       },
       'ctrl+k,l,i': {
         'description': 'Go to LinkedIn',
@@ -432,6 +443,15 @@ var kkjjhlhlba = new Kkjjhlhlba();
         'description': 'Go to Twitter',
         'method': 'http://twitter.com'
       },
+      'esc': {
+        'description': 'Close the cheatsheet',
+        'method': function() {
+          var cheatsheet = document.getElementById('keyboard-shortcuts');
+          if (cheatsheet && cheatsheet.className.indexOf('active') > -1) {
+            hideCheatSheet(cheatsheet);
+          }
+        }
+      }
     }
   });
 
