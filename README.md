@@ -23,12 +23,13 @@ To register a shortcut, use:
 Installation
 ------------
 To try out the Chrome extension:
-1. clone the repo
-2. go to chrome://chrome/extensions/ in Google Chrome
-3. Make sure "Developer Mode" is checked
-4. Click "Load unpacked extension..."
-5. Inside the kkjjhlhlba directory, choose the "extension" directory.
-6. Go!
+
+1.  clone the repo
+2.  go to chrome://chrome/extensions/ in Google Chrome
+3.  Make sure "Developer Mode" is checked
+4.  Click "Load unpacked extension..."
+5.  Inside the kkjjhlhlba directory, choose the "extension" directory.
+6.  Go!
 
 What's with the name?
 ---------------------
