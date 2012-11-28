@@ -397,6 +397,30 @@ var kkjjhlhlba = new Kkjjhlhlba();
     document.body.scrollTop = offsetTop;
   }
 
+function smoothScroll(scrollPos) {
+  var pixelsPerScroll = 100,
+  debugOldscroll,
+  easingFactor;
+
+  function move () {
+    if (scrollPos < 400) {
+      easingFactor = Math.max(scrollPos/400, 0.01);
+    }
+    else {
+      easingFactor = 1;
+    }
+    debugOldScroll = scrollPos;
+    scrollPos = Math.max(Math.ceil(scrollPos - (pixelsPerScroll * easingFactor)), 0);
+    console.log(debugOldScroll - scrollPos);
+    window.scrollTo(0, scrollPos);
+    if (scrollPos > 0) {
+      smoothScroll();
+    }
+  }
+
+  window.setTimeout(move, 15);
+}
+
   function navigateList(direction, containerID, listClassName) {
     var list = document.getElementById(containerID);
     console.log(list);
@@ -461,13 +485,19 @@ var kkjjhlhlba = new Kkjjhlhlba();
         'j': {
           'description': 'Next item',
           'method': function() {
-            console.log('hey there');
             switch (document.body.id) {
               case 'pagekey-member-home':
                 navigateList('next', 'my-feed-post', 'feed-item');
                 break;
               case 'pagekey-voltron_federated_search_internal':
+              case 'pagekey-voltron_people_search_internal':
+              case 'pagekey-voltron_job_search_internal':
+              case 'pagekey-voltron_company_search_internal':
+              case 'pagekey-voltron_group_search_internal':
                 navigateList('next', 'results', 'result');
+                break;
+              case 'pagekey-fps_results':
+                navigateList('next', 'result-set', 'vcard');
                 break;
             }
           }
@@ -481,7 +511,14 @@ var kkjjhlhlba = new Kkjjhlhlba();
                 navigateList('previous', 'my-feed-post', 'feed-item');
                 break;
               case 'pagekey-voltron_federated_search_internal':
+              case 'pagekey-voltron_people_search_internal':
+              case 'pagekey-voltron_job_search_internal':
+              case 'pagekey-voltron_company_search_internal':
+              case 'pagekey-voltron_group_search_internal':
                 navigateList('previous', 'results', 'result');
+                break;
+              case 'pagekey-fps_results':
+                navigateList('previous', 'result-set', 'vcard');
                 break;
             }
           }
@@ -490,6 +527,17 @@ var kkjjhlhlba = new Kkjjhlhlba();
           'description': 'Search LinkedIn',
           'method': function() {
             document.getElementById('main-search-box').focus();
+          }
+        }
+      }
+    });
+  } else if (document.domain.indexOf('facebook.com') > -1 && document.body.className.indexOf('timelineLayout') > -1) {
+    kkjjhlhlba.start({
+      'shortcuts': {
+        'ctrl+l,s': {
+          'description': 'Search for this person on LinkedIn',
+          'method': function() {
+            window.location = 'http://linkedin.com/vsearch/p?keywords=' + document.querySelector('#fbTimelineHeadline .name h2').innerHTML.split(' ').join('+');
           }
         }
       }
