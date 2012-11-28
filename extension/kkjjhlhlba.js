@@ -75,8 +75,8 @@ function Kkjjhlhlba() {
     // Mac specific
     '17': 'ctrl',
     '18': 'opt',
-    '91': 'lcommand',
-    '93': 'rcommand',
+    '91': 'command',
+    '93': 'command',
 
   // uppercase for non letters
     '1048': ')',
@@ -178,10 +178,11 @@ function Kkjjhlhlba() {
   function handleKeyDown (e) {
     var key, val, shortcut, method;
     var keydisplay = document.getElementById("key-display");
-    var activeElementTag = document.activeElement.tagName.toUpperCase();
-    // Do nothing if the focus is in an input or textarea.
+    var activeElement = document.activeElement;
+    var activeElementTag = activeElement.tagName.toUpperCase();
+    // Do nothing if the focus is in an input or textarea, or contenteditable=true.
     // TODO: check if the focus is in input[type="text"]. all the others are probably okay
-    if (activeElementTag === 'INPUT' || activeElementTag === 'TEXTAREA') {
+    if (activeElementTag === 'INPUT' || activeElementTag === 'TEXTAREA' || activeElement.contentEditable === 'true') {
       return;
     }
     // Convert keycode into the corresponding key's value
@@ -228,10 +229,11 @@ function Kkjjhlhlba() {
   function handleKeyUp (e) {
     var key, val, shortcut, method;
     var keydisplay = document.getElementById("key-display");
-    var activeElementTag = document.activeElement.tagName.toUpperCase();
+    var activeElement = document.activeElement;
+    var activeElementTag = activeElement.tagName.toUpperCase();
 
     // Do nothing if focus is in an input or textarea
-    if (activeElementTag === 'INPUT' || activeElementTag === 'TEXTAREA') {
+    if (activeElementTag === 'INPUT' || activeElementTag === 'TEXTAREA' || activeElement.contentEditable === 'true') {
       return;
     }
 
