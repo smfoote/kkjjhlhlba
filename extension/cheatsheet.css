@@ -3,7 +3,7 @@
   position: fixed;
   bottom: 0;
   left: 7%;
-  background-color: #CCC;
+  background-color: #D3D3D3;
   overflow: hidden;
   -webkit-border-top-left-radius: 8px;
   -webkit-border-top-right-radius: 8px;
@@ -11,6 +11,9 @@
   -moz-border-radius-topright: 8px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  -webkit-box-shadow: 0 0 25px #888;
+  -moz-box-shadow: 0 0 25px #888;
+  box-shadow: 0 0 25px #888;
   font-family: Helvetica,Arail,sans-serif;
   color: #383838;
   z-index: 2000;
@@ -29,16 +32,54 @@
 }
 
 #keyboard-shortcuts h2 {
+  font-size: 26px;
+  font-weight: bold;
+  color: #333;
   text-align: center;
   width: 95%;
   margin: 15px auto;
+  padding-bottom: 15px;
   border-bottom: 1px solid #A3A3A3;
 }
 
+#keyboard-shortcuts ul {
+  list-style: none;
+  width: 90%;
+  margin: 0 auto;
+  -webkit-column-count: 2;
+  -moz-column-count: 2;
+  column-count: 2;
+}
+
+#keyboard-shortcuts li {
+  padding: 4px 8px;
+  font-size: 12px;
+  width: 75%;
+}
+
+#keyboard-shortcuts li:hover {
+  background-color: #B4B4B4;
+}
+
+#keyboard-shortcuts li .method {
+  width: 40%;
+  text-align: right;
+  display: inline-block;
+  font-weight: bold;
+  color: #7C0086;
+}
+
+#keyboard-shortcuts li .description {
+  color: #333;
+  font-weight: normal;
+  margin-left: 8px;
+}
+
 #keyboard-shortcuts #close-cheatsheet {
+  font-weight: bold;
   position: absolute;
   top: 8px;
-  right: 8px;
+  right: 28px;
   border: none;
   background: none;
   cursor: pointer;
