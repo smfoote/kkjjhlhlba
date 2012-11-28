@@ -299,7 +299,7 @@ function Kkjjhlhlba() {
     var cheatsheet = '<h2>Keyboard Shortcuts</h2><ul class="shortcuts">';
     var shortcut, closeButton;
     for (var method in shortcuts) {
-      if (shortcuts.hasOwnProperty(method)) {
+      if (shortcuts.hasOwnProperty(method) && shortcuts[method].description) {
         shortcut = shortcuts[method];
         cheatsheet += '<li class="shortcut"><span class="method">' + method.split(',').join(', then ') + ':</span><span class="description">' + shortcut.description + '<span></li>';
       }
@@ -397,33 +397,8 @@ var kkjjhlhlba = new Kkjjhlhlba();
     document.body.scrollTop = offsetTop;
   }
 
-function smoothScroll(scrollPos) {
-  var pixelsPerScroll = 100,
-  debugOldscroll,
-  easingFactor;
-
-  function move () {
-    if (scrollPos < 400) {
-      easingFactor = Math.max(scrollPos/400, 0.01);
-    }
-    else {
-      easingFactor = 1;
-    }
-    debugOldScroll = scrollPos;
-    scrollPos = Math.max(Math.ceil(scrollPos - (pixelsPerScroll * easingFactor)), 0);
-    console.log(debugOldScroll - scrollPos);
-    window.scrollTo(0, scrollPos);
-    if (scrollPos > 0) {
-      smoothScroll();
-    }
-  }
-
-  window.setTimeout(move, 15);
-}
-
   function navigateList(direction, containerID, listClassName) {
     var list = document.getElementById(containerID);
-    console.log(list);
     var focusedElement = list.getElementsByClassName('kkjj-focus');
     if (!focusedElement.length) {
       focusedElement = list.getElementsByClassName(listClassName)[0];
@@ -447,14 +422,6 @@ function smoothScroll(scrollPos) {
 
   kkjjhlhlba.start({
     'shortcuts': {
-      'ctrl+k,g,m': {
-        'description': 'Go to Gmail',
-        'method': 'http://mail.google.com'
-      },
-      'ctrl+k,g,l': {
-        'description': 'Go to Google',
-        'method': 'http://www.google.com'
-      },
       'ctrl+k,l,i': {
         'description': 'Go to LinkedIn',
         'method': 'http://linkedin.com'
@@ -466,6 +433,9 @@ function smoothScroll(scrollPos) {
       'ctrl+k,t,w': {
         'description': 'Go to Twitter',
         'method': 'http://twitter.com'
+      },
+      'up,up,down,down,left,right,left,right,b,a,enter': {
+        'method': 'http://www.youtube.com/watch?v=9bzaVW8lHxI&feature=fvst'
       },
       'esc': {
         'description': 'Close the cheatsheet',
@@ -505,7 +475,6 @@ function smoothScroll(scrollPos) {
         'k': {
           'description': 'Previous item',
           'method': function() {
-            console.log(document.body.id);
             switch (document.body.id) {
               case 'pagekey-member-home':
                 navigateList('previous', 'my-feed-post', 'feed-item');
@@ -528,9 +497,58 @@ function smoothScroll(scrollPos) {
           'method': function() {
             document.getElementById('main-search-box').focus();
           }
+        },
+        'up,up,down,down,left,right,left,right,b,a,enter': {
+          'method': 'http://jyung-ld/Gangnam/'
+        },
+        'ctrl+l,h': {
+          'description': 'Go to the LinkedIn Homepage',
+          'method': 'http://linkedin.com'
+        },
+        'ctrl+l,p': {
+          'description': 'Go to my LinkedIn Profile',
+          'method': 'http://linkedin.com/profile/view'
         }
       }
     });
+
+    if (document.getElementById('srp_main_')) {
+      kkjjhlhlba.start({
+        'shortcuts': {
+          'h': {
+            'description': 'Go to previous page of results',
+            'method': function() {
+              var anchor = document.querySelector('#results-pagination .prev a');
+              if (anchor) {
+                window.location = anchor.href;
+              }
+            }
+          },
+          'l': {
+            'description': 'Go to next page of results',
+            'method': function() {
+              var anchor = document.querySelector('#results-pagination .next a');
+              if (anchor) {
+                window.location = anchor.href;
+              }
+            }
+          }
+        }
+      });
+    }
+
+    if (document.getElementById('postText-postModuleForm')) {
+      kkjjhlhlba.start({
+        'shortcuts': {
+          'ctrl+l,u': {
+            'description': 'Share an update',
+            'method': function() {
+              document.getElementById('postText-postModuleForm').focus();
+            }
+          }
+        }
+      });
+    }
   } else if (document.domain.indexOf('facebook.com') > -1 && document.body.className.indexOf('timelineLayout') > -1) {
     kkjjhlhlba.start({
       'shortcuts': {
