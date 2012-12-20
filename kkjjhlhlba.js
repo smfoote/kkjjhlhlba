@@ -176,7 +176,6 @@ function Kkjjhlhlba() {
   // Run on each keydown.
   function handleKeyDown (e) {
     var key, val, shortcut, method;
-    var keydisplay = document.getElementById("key-display");
     var activeElement = document.activeElement;
     var activeElementTag = activeElement.tagName.toUpperCase();
     // Do nothing if the focus is in an input or textarea, or contenteditable=true.
@@ -216,18 +215,12 @@ function Kkjjhlhlba() {
         pressedKeys.push(val);
       }
       previousVal = val;
-
-      // Display the current code in the page [for presentation purposes only - remove on 
-      // Nov. 29, 2012]
-      keydisplay.className = document.getElementById("key-display").className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
-      keydisplay.innerHTML = currentCode;
     }
   }
 
   // Run on each key up
   function handleKeyUp (e) {
     var key, val, shortcut, method;
-    var keydisplay = document.getElementById("key-display");
     var activeElement = document.activeElement;
     var activeElementTag = activeElement.tagName.toUpperCase();
 
@@ -270,23 +263,12 @@ function Kkjjhlhlba() {
 
         // Reset the currentCode
         currentCode = '';
-
-        // And hide the keydisplay [remove after Nov. 29, 2012]
-        window.setTimeout(function() {
-          if (keydisplay.className.search('hidden') < 0) {
-            keydisplay.className += ("hidden");
-          }
-        }, 750);
       }
     } else {
       // If no shortcut is found, start a new timer.
       inputTimer = window.setTimeout(function() {
         // After 750 ms (3/4 of a second) inactivity, reset the currentCode
         currentCode = '';
-        // And hide the keydisplay [remove after Nov. 29, 2012]
-        if (keydisplay.className.search('hidden') < 0) {
-          keydisplay.className += ("hidden");
-        }
       }, 750);
     }
   }
@@ -330,7 +312,6 @@ function Kkjjhlhlba() {
     start: function(config) {
       var method;
       var cheatsheet;
-      var keydisplay;
       if (!shortcuts) {
         // If the shortcuts object doesn't exist yet, no mergin is necessary.
         shortcuts = config.shortcuts;
@@ -348,13 +329,6 @@ function Kkjjhlhlba() {
         cheatsheet = document.createElement('div');
         cheatsheet.id = 'keyboard-shortcuts';
         document.body.appendChild(cheatsheet);
-
-        // Create the keydisplay container, and append it to the end of the <body>
-        // TODO: remove this after Nov. 29, 2012
-        keydisplay = document.createElement('div');
-        keydisplay.id = 'key-display';
-        keydisplay.className += 'hidden';
-        document.body.appendChild(keydisplay);
       } else {
         // If the shortcuts object already exists, merge
         for (method in config.shortcuts) {
