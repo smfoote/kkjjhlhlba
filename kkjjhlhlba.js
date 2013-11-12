@@ -156,14 +156,15 @@ function Kkjjhlhlba() {
   // Utility function to prevent default cross browser
   var preventDefault = function (e) {
     if (e.preventDefault) {
-     preventDefault = function(e) {
-         e.preventDefault();
-       };
-     } else {
+      preventDefault = function(e) {
+        e.preventDefault();
+      };
+    } else {
       preventDefault = function(e) {
         e.returnValue = false;
       };
     }
+    preventDefault();
   };
 
   // Util function to get key vals cross browser
@@ -313,7 +314,7 @@ function Kkjjhlhlba() {
       var method;
       var cheatsheet;
       if (!shortcuts) {
-        // If the shortcuts object doesn't exist yet, no mergin is necessary.
+        // If the shortcuts object doesn't exist yet, no merging is necessary.
         shortcuts = config.shortcuts;
         // Add the showCheatsheet shortcut
         shortcuts['?'] = {
