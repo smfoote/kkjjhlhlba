@@ -93,7 +93,7 @@ function Kkjjhlhlba() {
     '1189': '_',
     '1192': '~',
     '1219': '{',
-    '1219': '|',
+    '1220': '|',
     '1221': '}',
     '1188': '<',
     '1190': '>',
@@ -169,6 +169,7 @@ function Kkjjhlhlba() {
 
   // Util function to get key vals cross browser
   function getKeycode(e) {
+    var key;
     e = (window.event) ? window.event : e;
     key = e.which ? e.which : e.keyCode;
     return key;
@@ -187,7 +188,7 @@ function Kkjjhlhlba() {
     // Convert keycode into the corresponding key's value
     key = getKeycode(e);
     val = keyCodes[key];
-    if(val === "shift") {
+    if(val === 'shift') {
       isShiftDown = true;
     } else {
       if(isShiftDown) {
@@ -235,7 +236,7 @@ function Kkjjhlhlba() {
     val = keyCodes[key];
 
     // Update isShiftDown flag
-    if(val === "shift") {
+    if(val === 'shift') {
       isShiftDown = false;
     }
 
@@ -270,6 +271,7 @@ function Kkjjhlhlba() {
       inputTimer = window.setTimeout(function() {
         // After 750 ms (3/4 of a second) inactivity, reset the currentCode
         currentCode = '';
+        isShiftDown = false;
       }, 750);
     }
   }
@@ -300,7 +302,7 @@ function Kkjjhlhlba() {
   // Show the cheatsheet by adding the class "active"
   function showCheatsheet() {
     var cheatsheet = document.getElementById('keyboard-shortcuts');
-    if (!cheatsheet.className.indexOf('active') > -1) {
+    if (cheatsheet.className.indexOf('active') === -1) {
       cheatsheet.className += ' active';
     }
   }
