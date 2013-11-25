@@ -182,7 +182,7 @@ function Kkjjhlhlba() {
     var activeElementTag = activeElement.tagName.toUpperCase();
     // Do nothing if the focus is in an input or textarea, or contenteditable=true.
     // TODO: check if the focus is in input[type="text"]. all the others are probably okay
-    if (activeElementTag === 'INPUT' || activeElementTag === 'TEXTAREA' || activeElement.contentEditable === 'true') {
+    if (activeElementTag === 'INPUT' || activeElementTag === 'TEXTAREA' || activeElementTag === 'SELECT' || activeElement.contentEditable === 'true') {
       return;
     }
     // Convert keycode into the corresponding key's value
