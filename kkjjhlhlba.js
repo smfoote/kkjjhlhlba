@@ -316,7 +316,9 @@ function Kkjjhlhlba() {
     for (var method in shortcuts) {
       if (shortcuts.hasOwnProperty(method)) {
         shortcut = shortcuts[method];
-        cheatsheet += '<li class="shortcut"><span class="method">' + method.split(',').join(', then ') + ':</span><span class="description">' + shortcut.description + '<span></li>';
+        if (shortcut.description) {
+          cheatsheet += '<li class="shortcut"><span class="method">' + method.split(',').join(', then ') + ':</span><span class="description">' + shortcut.description + '<span></li>';
+        }
       }
     }
     cheatsheet += '</ul><button type="button" id="close-cheatsheet">Close</button></div>';
