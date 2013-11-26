@@ -120,6 +120,12 @@ function Kkjjhlhlba() {
   var initialized = false;
 
   /**
+   * Flag to determine if a cheatsheet should be created
+   */
+  var noCheatsheet = false;
+
+
+  /**
    * The current sequence of keys that have been entered by the user. This variable is cleared
    * out each time a function is exectued, or the keyboard is idle for 3/4 of a second.
    */
@@ -365,10 +371,14 @@ function Kkjjhlhlba() {
         addEventListener(document, 'keydown', handleKeyDown, false);
         addEventListener(document, 'keyup', handleKeyUp, false);
 
-        // Create the cheatsheet container, and append it to the end of the <body>
-        cheatsheet = document.createElement('div');
-        cheatsheet.id = 'keyboard-shortcuts';
-        document.body.appendChild(cheatsheet);
+        if (!config.noCheatsheet) {
+          // Create the cheatsheet container, and append it to the end of the <body>
+          cheatsheet = document.createElement('div');
+          cheatsheet.id = 'keyboard-shortcuts';
+          document.body.appendChild(cheatsheet);
+        } else {
+          noCheatsheet = true;
+        }
         initialized = true;
       }
 
@@ -379,8 +389,24 @@ function Kkjjhlhlba() {
         }
       }
 
-      // Recreate cheatsheet each time start is run, so the final cheatsheet is accurate.
-      createCheatSheet(shortcuts);
+      if (!noCheatsheet) {
+        if (config.noCheatsheet) {
+          // Delete the cheatsheet if it has been created
+          cheatsheet = document.getElementById('keyboard-shortcuts');
+          document.body.removeChild(cheatsheet);
+          noCheatsheet = true;
+        } else {
+          // Recreate cheatsheet each time start is run, so the final cheatsheet is accurate.
+          createCheatSheet(shortcuts);
+        }
+      }
+    },
+
+    /**
+     * Get the shortcuts object
+     */
+    getShortcuts: function() {
+      return shortcuts;
     }
   };
 }
