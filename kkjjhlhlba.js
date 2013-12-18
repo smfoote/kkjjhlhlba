@@ -310,12 +310,14 @@
 
           // Reset the currentCode
           currentCode = '';
+          previousVal = '';
         }
       } else {
         // If no shortcut is found, start a new timer.
         inputTimer = window.setTimeout(function() {
           // After 750 ms (3/4 of a second) inactivity, reset the currentCode
           currentCode = '';
+          previousVal = '';
           isShiftDown = false;
         }, 750);
       }
@@ -348,7 +350,7 @@
       // Add event listener on the close button.
       closeButton = document.getElementById('close-cheatsheet');
       addEventListener(closeButton, 'click', function() {
-        container.className = container.className.replace(/\s*active/, '');
+        container.className = container.className.replace(/\s*active\b/, '');
       });
     }
 
@@ -357,7 +359,7 @@
      */
     function showCheatsheet() {
       var cheatsheet = document.getElementById('keyboard-shortcuts');
-      if (cheatsheet && cheatsheet.className.indexOf('active') === -1) {
+      if (cheatsheet && !/\bactive\b/.test(cheatsheet.className)) {
         cheatsheet.className += ' active';
       }
     }
