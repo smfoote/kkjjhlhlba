@@ -1,0 +1,29 @@
+{
+  "name": "kkjjhlhlba",
+  "version": "0.0.0",
+  "description": "An easy way to add keyboard shortcuts to any site",
+  "main": "kkjjhlhlba.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/smfoote/kkjjhlhlba.git"
+  },
+  "keywords": [
+    "javascript",
+    "keyboard",
+    "shortcuts"
+  ],
+  "author": "Steven Foote",
+  "license": "MIT",
+  "gitHead": "ef886f674e47eb87d0cacbcae2802059dcb535c4",
+  "readmeFilename": "README.md",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-jshint": "~0.6.3",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-watch": "~0.5.3"
+  }
+}
