@@ -203,7 +203,7 @@
           e.returnValue = false;
         };
       }
-      preventDefault();
+      preventDefault(e);
     };
 
     /**
@@ -231,6 +231,10 @@
       // Convert keycode into the corresponding key's value
       key = getKeycode(e);
       val = keyCodes[key];
+      method = shortcuts[val];
+      if (method && currentCode === '') {
+        preventDefault(e);
+      }
       if(val === 'shift') {
         isShiftDown = true;
       } else {
@@ -301,10 +305,7 @@
           // Redirect to the URL if 'method' is a string.
           window.location = method;
         } else {
-          if (shortcut.preventDefault) {
-            // Prevent default, if necessary
-            preventDefault();
-          }
+          preventDefault(e);
           // call the method, passing the event as an argument
           method.call(this, [e]);
 
